@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sattva Cafe | Simple & Comforting</title>
+    <style>
+        /* --- Colors & Typography --- */
+        :root {
+            --primary: #4a2c2a; /* Deep Coffee Brown */
+            --secondary: #a0522d; /* Sienna/Terracotta */
+            --accent: #f5deb3; /* Wheat/Cream */
+            --background: #fdfaf5; /* Off-White/Paper */
+            --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-serif: 'Georgia', 'Times New Roman', Times, serif;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: var(--font-sans);
+            color: var(--primary);
+            background-color: var(--background);
+            margin: 0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            padding: 3rem 0;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Header and Navigation --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(253, 250, 245, 0.95);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: var(--font-serif);
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none; /* Hidden by default on mobile */
+            gap: 1.5rem;
+        }
+
+        .nav-links a, .cta-button {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hamburger Menu Icon */
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0.5rem;
+        }
+        .menu-icon, .menu-icon::before, .menu-icon::after {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary);
+            transition: all 0.3s;
+        }
+        .menu-icon::before {
+            content: '';
+            transform: translateY(-8px);
+        }
+        .menu-icon::after {
+            content: '';
+            transform: translateY(5px);
+        }
+
+        /* Mobile Menu (initially hidden) */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            border-top: 1px solid var(--accent);
+            padding: 1rem 0;
+        }
+        .mobile-menu a {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--primary);
+            border-radius: 5px;
+        }
+        .mobile-menu a:hover {
+            background-color: var(--accent);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('Gemini_Generated_Image_b1xij1b1xij1b1xi.png') no-repeat center center/cover;
+            padding: 1rem;
+        }
+
+        .hero-content {
+            background-color: rgba(74, 44, 42, 0.8); /* Primary color with transparency */
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 90%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--accent);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .hero-actions {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--primary);
+            border: none;
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+        .btn-secondary:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+        
+        /* --- General Section Styles --- */
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .separator {
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary);
+            margin: 0.5rem auto 0;
+            border-radius: 50px;
+        }
+        .bg-light {
+            background-color: var(--accent);
+        }
+
+        /* --- Story Section (Grid Layout) --- */
+        .story-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+        .story-content {
+            flex: 1;
+        }
+        .story-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s;
+        }
+        .story-image img:hover {
+            transform: scale(1.02);
+        }
+        blockquote {
+            border-left: 4px solid var(--secondary);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            font-size: 1.15rem;
+            font-family: var(--font-serif);
+        }
+
+        /* --- Menu Section (Card Layout) --- */
+        .menu-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: 1fr; /* Default: Single column for mobile */
+        }
+        
+        .menu-card {
+            background-color: var(--background);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+        .menu-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center center;
+        }
+        .card-image h3 {
+            color: var(--accent);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+        .card-content ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+        .card-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Specific Card Images */
+        #card-tea { background-image: url('https://i.pinimg.com/474x/39/9e/08/399e08d850b98173f6a81b567b99e886.jpg'); background-color: var(--primary); }
+        #card-bread { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI1L4mxuyAJ996b847yheb-rbEb9Srbjj5vQ&s'); background-color: var(--secondary); }
+        #card-biscuit { background-image: url('https://www.sugarfree-india.com/images/uploads/recipe-images/sugar-free-cream-biscuits-recipe.jpg'); background-color: var(--accent); }
+        #card-biscuit h3 { color: var(--primary); }
+
+        /* --- Specials Section --- */
+        .special-box {
+            background-color: var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            text-align: center;
+        }
+        .special-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .special-content h3 {
+            color: var(--primary);
+            font-size: 1.75rem;
+        }
+        .special-tag {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--accent);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        /* --- Contact Section --- */
+        .contact {
+            background-color: var(--primary);
+            color: var(--accent);
+            text-align: center;
+        }
+        .contact h2 {
+            color: var(--accent);
+        }
+        .contact .separator {
+            background-color: var(--accent);
+            opacity: 0.5;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .contact-grid h3 {
+            color: var(--secondary);
+        }
+        .contact-grid a {
+            color: var(--accent);
+            text-decoration: underline;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .contact-grid a:hover {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(245, 222, 179, 0.2);
+            padding-top: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .social-links svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--accent);
+            transition: fill 0.3s;
+        }
+        .social-links a:hover svg {
+            fill: var(--secondary);
+        }
+        .copyright {
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+
+        /* --- Media Queries for Tablet/Desktop (Responsive Layout) --- */
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 5rem;
+            }
+            .hero p {
+                font-size: 1.5rem;
+            }
+            .hero-actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .menu-toggle, .mobile-menu {
+                display: none;
+            }
+
+            .nav-links {
+                display: flex;
+            }
+
+            .cta-button {
+                background-color: var(--secondary);
+                color: var(--accent);
+                padding: 0.5rem 1.25rem;
+                border-radius: 50px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .cta-button:hover {
+                background-color: var(--primary);
+            }
+            
+            .story-grid {
+                flex-direction: row;
+                text-align: left;
+            }
+            .story-content, .story-image {
+                flex: 1;
+            }
+            .story-image {
+                order: 2; /* Image on the right */
+            }
+            .story-content {
+                order: 1; /* Content on the left */
+                padding-right: 2rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .special-box {
+                flex-direction: row;
+                text-align: left;
+            }
+            .special-image {
+                flex-shrink: 0;
+            }
+
+            .contact-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+    <script>
+        // JavaScript for mobile menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">Sattva.</a>
+                
+                <!-- Desktop Navigation Links -->
+                <div class="nav-links">
+                    <a href="#menu">Menu</a>
+                    <a href="#story">Our Story</a>
+                    <a href="#specials">Specials</a>
+                    <a href="#contact">Visit</a>
+                </div>
+
+                <!-- CTA Button -->
+                <a href="#" class="cta-button" aria-label="Order Online">
+                    Order Online
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+                    <span class="menu-icon"></span>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu Content -->
+            <div id="mobile-menu" class="mobile-menu">
+                <a href="#menu" onclick="toggleMenu()">Menu</a>
+                <a href="#story" onclick="toggleMenu()">Our Story</a>
+                <a href="#specials" onclick="toggleMenu()">Specials</a>
+                <a href="#contact" onclick="toggleMenu()">Visit</a>
+                <a href="#" class="cta-button" style="background-color: var(--secondary); color: var(--accent); margin-top: 1rem;">Order Online</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>The Sattva Cafe</h1>
+            <p>Where Simplicity Meets Comfort in Every Sip.</p>
+            <div class="hero-actions">
+                <a href="#menu" class="btn btn-primary">View Simple Menu</a>
+                <a href="#contact" class="btn btn-secondary">Find Our Location</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Our Story/Philosophy Section -->
+    <section id="story">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Philosophy</h2>
+                <div class="separator"></div>
+            </div>
+
+            <div class="story-grid">
+                <div class="story-content">
+                    <blockquote>
+                        "Where there is tea, there is hope."
+                        <footer style="font-size: 0.9rem; color: var(--primary); opacity: 0.7; margin-top: 0.5rem;">&mdash; Arthur Wing Pinero</footer>
+                    </blockquote>
+                    <p style="font-size: 1.15rem; color: var(--primary);">
+                        **Sattva** is more than a cafe; it's a feeling of purity, harmony, and balance. We meticulously prepare high-quality tea and pair it with the warmth of classic, comforting snacks, focusing on purity, harmony, and balance.
+                    </p>
+                    <p style="font-size: 1rem; color: var(--primary); opacity: 0.8; margin-top: 1rem;">
+                        Our goal is to create a peaceful, beautifully designed space for you to reset. From the creamy texture of our **Bun Maska** to the bold flavor of our **Traditional Chai**, every item is crafted with intention and care.
+                    </p>
+                    <a href="#contact" style="color: var(--secondary); font-weight: bold; display: inline-block; margin-top: 1rem;">
+                        Meet Our Baristas &rarr;
+                    </a>
+                </div>
+                <div class="story-image">
+                    <img src="https://placehold.co/800x600/D2B48C/4A2C2A?text=Cozy+Seating+Area+with+Books" alt="Serene and quiet cafe seating area"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Simple Menu Highlights Section -->
+    <section id="menu" class="bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Simple & Comforting Menu</h2>
+                <p style="font-size: 1.15rem; color: var(--primary); opacity: 0.7;">Focusing on timeless classics: Tea, Bread, and Biscuits.</p>
+            </div>
+            
+            <div class="menu-grid">
+                
+                <!-- Card 1: Tea (Chai) -->
+                <div class="menu-card">
+                    <div id="card-tea" class="card-image">
+                        <h3>Authentic Indian Tea</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="color: var(--secondary); font-weight: bold; margin-bottom: 0.5rem;">The Perfect Sip</p>
+                        <ul>
+                            <li><span style="font-weight: bold;">Traditional Chai:</span> Robust, spiced, and milk-based.</li>
+                            <li><span style="font-weight: bold;">Black Tea:</span> Strong and comforting.</li>
+                            <li><span style="font-weight: bold;">Herbal Infusions:</span> Simple and refreshing.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card 2: Bread (Bun Maska) -->
+                <div class="menu-card">
+                    <div id="card-bread" class="card-image">
+                        <h3>Freshly Baked Bread</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="color: var(--secondary); font-weight: bold; margin-bottom: 0.5rem;">Simple & Delicious</p>
+                        <ul>
+                            <li><span style="font-weight: bold;">Bun Maska:</span> Soft bread generously slathered with butter.</li>
+                            <li><span style="font-weight: bold;">Plain Toast:</span> A classic companion to tea.</li>
+                            <li><span style="font-weight: bold;">Pav Bhaji:</span> A savory, spiced vegetable mash with bread.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card 3: Biscuits -->
+                <div class="menu-card">
+                    <div id="card-biscuit" class="card-image">
+                        <h3>The Biscuit Selection</h3>
+                    </div>
+                    <div class="card-content">
+                        <p style="color: var(--secondary); font-weight: bold; margin-bottom: 0.5rem;">The Perfect Dunker</p>
+                        <ul>
+                            <li><span style="font-weight: bold;">Assorted Shortbreads:</span> Buttery and crumbly.</li>
+                            <li><span style="font-weight: bold;">Classic Glucose:</span> Sweet and energy-giving.</li>
+                            <li><span style="font-weight: bold;">Salted Crackers:</span> For a light, savory crunch.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="#" class="btn btn-secondary" style="background-color: var(--primary); color: var(--accent); border: none;">
+                    See Full Digital Menu
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Specials/Events Section -->
+    <section id="specials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Weekly Spotlight</h2>
+                <div class="separator"></div>
+            </div>
+
+            <div class="special-box">
+                <img src="https://placehold.co/300x300/4A2C2A/F5DEB3?text=Hot+Samosa+Special" alt="Seasonal Snack Special" class="special-image">
+                <div class="special-content">
+                    <h3 style="margin-bottom: 0;">The Seasonal Hot Snack</h3>
+                    <p style="color: var(--secondary); font-weight: 500;">Available for a limited time: Rainy Day Collection</p>
+                    <p style="opacity: 0.9;">
+                        Experience our seasonal special, a perfect pairing for your hot tea. Ask our staff about today's comforting, locally-sourced snack designed to bring warmth and joy to your day.
+                    </p>
+                    <span class="special-tag">
+                        Special Pricing Inquire Within
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact & Location Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Visit Sattva.</h2>
+                <div class="separator"></div>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Location -->
+                <div>
+                    <h3 style="font-size: 1.5rem;">Location</h3>
+                    <p>Near APMC 2nd Gate, NH 218 Kerur</p>
+                    <p>Tq: Badami, Dist: Bagalkot</p>
+                    <a href="https://maps.google.com/?q=Kerur+Badami+Bagalkot" target="_blank">
+                        Get Directions on Map
+                    </a>
+                </div>
+                
+                <!-- Hours -->
+                <div>
+                    <h3 style="font-size: 1.5rem;">Hours</h3>
+                    <p>Mon - Fri: 7:00 AM - 8:00 PM</p>
+                    <p>Sat - Sun: 8:00 AM - 6:00 PM</p>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 style="font-size: 1.5rem;">Connect</h3>
+                    <p>Phone: 7624936266</p>
+                    <p>Email: <a href="mailto:hello@sattvacafe.com">hello@sattvacafe.com</a></p>
+                </div>
+            </div>
+
+            <footer>
+                <div class="social-links">
+                    <!-- Placeholder Icons for social media -->
+                    <a href="#" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24"><path d="M19.636 7.425c-.244-.143-.538-.225-.845-.225H5.209c-.307 0-.601.082-.845.225-.244.143-.44.339-.569.593-.129.254-.183.548-.158.847l.213 2.564c.026.308.109.601.252.845.143.244.339.44.593.569.254.129.548.183.847.158l2.564-.213c.308-.026.601-.109.845-.252.244-.143.44-.339.569-.593.129-.254.183-.548.158-.847l-.213-2.564c-.026-.308-.109-.601-.252-.845zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15H8v-8h2v8zm4 0h-2v-8h2v8zm-2-12.28c-.463 0-.84-.377-.84-.84s.377-.84.84-.84.84.377.84.84-.377.84-.84.84z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07c3.253.15 4.792 1.483 4.956 4.956.058 1.265.069 1.645.069 4.849 0 3.204-.012 3.584-.069 4.849-.164 3.473-1.702 4.849-4.956 4.956-1.265.058-1.645.069-4.849.069-3.204 0-3.584-.012-4.849-.069-3.253-.164-4.792-1.483-4.956-4.956-.058-1.265-.069-1.645-.069-4.849 0-3.204.012-3.584.069-4.849.164-3.253 1.483-4.792 4.956-4.956 1.265-.058 1.645-.069 4.849-.069zM12 8c-2.204 0-4 1.791-4 4s1.796 4 4 4c2.204 0 4-1.791 4-4s-1.796-4-4-4zm0 5.925c-1.61 0-2.925-1.315-2.925-2.925s1.315-2.925 2.925-2.925 2.925 1.315 2.925 2.925-1.315 2.925-2.925 2.925zM15.42 5.25c.677 0 1.226-.549 1.226-1.226s-.549-1.226-1.226-1.226-1.226.549-1.226 1.226.549 1.226 1.226 1.226z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Twitter/X">
+                        <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12s5.374 12 12 12 12-5.373 12-12-5.374-12-12-12zm-2 18h-2v-8h2v8zm4 0h-2v-8h2v8zm-2-12.28c-.463 0-.84-.377-.84-.84s.377-.84.84-.84.84.377.84.84-.377.84-.84.84z"/></svg>
+                    </a>
+                </div>
+                <p class="copyright">&copy; 2025 The Sattva Cafe. All rights reserved. | Crafted with Care.</p>
+            </footer>
+        </div>
+    </section>
+
+</body>
+</html>
